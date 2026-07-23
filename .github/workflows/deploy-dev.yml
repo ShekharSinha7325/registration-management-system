@@ -1,0 +1,50 @@
+name: Deploy to DEV
+
+on:
+  push:
+    branches: [ dev ]
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install backend dependencies
+        run: npm ci
+        working-directory: backend
+
+      - name: Run backend tests
+        run: npm test --if-present
+        working-directory: backend
+
+      - name: Install frontend dependencies
+        run: npm ci
+        working-directory: frontend
+
+      - name: Build frontend
+        run: npm run build
+        working-directory: frontend
+        env:
+          REACT_APP_API_URL: /api
+
+  deploy:
+    needs: test-and-build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to DEV VM over SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.DEV_VM_IP }}
+          username: ${{ secrets.DEV_VM_USER }}
+          key: ${{ secrets.DEV_SSH_KEY }}
+          script: |
+            cd /var/www/registration-app
+            chmod +x scripts/deploy.sh
+            ./scripts/deploy.sh dev

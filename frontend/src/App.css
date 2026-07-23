@@ -1,0 +1,7 @@
+.app { max-width: 800px; margin: 40px auto; font-family: system-ui, sans-serif; padding: 0 16px; }
+.registration-form { display: flex; flex-direction: column; gap: 8px; margin-bottom: 32px; }
+.registration-form input, .registration-form textarea { padding: 8px; font-size: 14px; }
+.registration-form button { padding: 10px; background: #1a56db; color: #fff; border: none; cursor: pointer; }
+.registration-table { width: 100%; border-collapse: collapse; }
+.registration-table th, .registration-table td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+.error { color: #c0392b; }
