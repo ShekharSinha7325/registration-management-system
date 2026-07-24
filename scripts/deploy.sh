@@ -12,15 +12,16 @@ echo ">>> [1/6] Pulling latest code ($ENV branch)"
 cd "$APP_DIR"
 git fetch origin
 git checkout "$ENV"
+git clean -fd backend/package-lock.json frontend/package-lock.json 2>/dev/null || true
 git pull origin "$ENV"
 
 echo ">>> [2/6] Installing backend dependencies"
 cd "$APP_DIR/backend"
-npm ci --omit=dev
+npm install --omit=dev
 
 echo ">>> [3/6] Installing frontend dependencies & building"
 cd "$APP_DIR/frontend"
-npm ci
+npm install
 npm run build
 
 echo ">>> [4/6] Restarting backend via PM2"
