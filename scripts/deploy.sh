@@ -9,8 +9,7 @@ main() {
   cd "$APP_DIR"
   git fetch origin
   git checkout "$ENV"
-  git clean -fd backend/package-lock.json frontend/package-lock.json 2>/dev/null || true
-  git pull origin "$ENV"
+  git reset --hard "origin/$ENV"
 
   echo ">>> [2/6] Installing backend dependencies"
   cd "$APP_DIR/backend"
