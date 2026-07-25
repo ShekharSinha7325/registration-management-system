@@ -1,24 +1,41 @@
-import { useEffect, useState, useCallback } from 'react';
-import { getRegistrations } from './api';
+import { useState } from 'react';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import RegistrationForm from './components/RegistrationForm';
-import RegistrationList from './components/RegistrationList';
+import Login from './components/Login';
+import AdminDashboard from './components/AdminDashboard';
 import './App.css';
 
-export default function App() {
-  const [registrations, setRegistrations] = useState([]);
+function AppContent() {
+  const { user, loading } = useAuth();
+  const [showLogin, setShowLogin] = useState(false);
 
-  const load = useCallback(async () => {
-    const res = await getRegistrations();
-    setRegistrations(res.data.data);
-  }, []);
+  if (loading) return null;
 
-  useEffect(() => { load(); }, [load]);
+  // Logged-in admin: show only the dashboard, never the public form
+  if (user) return <AdminDashboard />;
 
+  // Admin clicked "Administration Login": show the login form
+  if (showLogin) return <Login onCancel={() => setShowLogin(false)} />;
+
+  // Default: public registration form, with a small admin entry point
   return (
-    <div className="app">
-      <h1>Registration Management System</h1>
-      <RegistrationForm onCreated={load} />
-      <RegistrationList registrations={registrations} onChange={load} />
+    <div className="hero">
+      <button className="admin-corner-btn" onClick={() => setShowLogin(true)}>
+        Administration Login
+      </button>
+      <div className="hero-header">
+        <h1>📚 City Public Library</h1>
+        <p>Register below to become a library member.</p>
+      </div>
+      <RegistrationForm />
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 }
