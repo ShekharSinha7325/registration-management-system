@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { createRegistration } from '../api';
 
 const initialState = {
@@ -19,6 +19,13 @@ export default function RegistrationForm() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  // Auto-dismiss the success banner after a few seconds
+  useEffect(() => {
+    if (!success) return;
+    const timer = setTimeout(() => setSuccess(false), 4500);
+    return () => clearTimeout(timer);
+  }, [success]);
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
@@ -41,26 +48,19 @@ export default function RegistrationForm() {
     }
   };
 
-  if (success) {
-    return (
-      <div className="page-content">
-        <div className="success-box">
-          <h2>Application Submitted!</h2>
-          <p>
-            Thank you for applying for library membership. Our administration team will
-            review your application and get in touch with you soon.
-          </p>
-          <button onClick={() => setSuccess(false)}>Submit Another Application</button>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="page-content">
       <form onSubmit={handleSubmit} className="registration-form">
+        <div className="form-badge">📖 New Member</div>
         <h2>Library Membership Registration</h2>
         <p className="form-subtitle">Please fill in your details accurately.</p>
+
+        {success && (
+          <div className="success-banner">
+            <span className="success-icon">✓</span>
+            Application submitted! We'll review it shortly.
+          </div>
+        )}
         {error && <p className="error">{error}</p>}
 
         <label>Full Name</label>
@@ -98,9 +98,9 @@ export default function RegistrationForm() {
 
         <label>Membership Type</label>
         <select name="membershipType" value={form.membershipType} onChange={handleChange}>
-          <option value="student">Student</option>
-          <option value="faculty">Faculty</option>
-          <option value="general">General Public</option>
+          <option value="student">🎓 Student</option>
+          <option value="faculty">🧑‍🏫 Faculty</option>
+          <option value="general">👤 General Public</option>
         </select>
 
         <label>ID Proof Number</label>

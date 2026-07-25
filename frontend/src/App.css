@@ -1,11 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap');
+
 * { box-sizing: border-box; }
 
 body {
   margin: 0;
-  font-family: 'Georgia', 'Times New Roman', serif;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
   background-color: #f4ecd8;
   color: #2c1e12;
 }
+
+h1, h2 { font-family: 'Playfair Display', Georgia, serif; }
 
 .app-shell {
   min-height: 100vh;
@@ -15,66 +19,169 @@ body {
 .hero {
   min-height: 100vh;
   position: relative;
-  padding: 40px 20px 60px;
+  overflow: hidden;
+  padding: 48px 20px 70px;
   background:
-    linear-gradient(rgba(59,36,21,0.85), rgba(59,36,21,0.7)),
+    radial-gradient(circle at 15% 20%, rgba(217,164,65,0.10), transparent 40%),
+    radial-gradient(circle at 85% 80%, rgba(217,164,65,0.08), transparent 40%),
+    linear-gradient(rgba(44,26,15,0.92), rgba(59,36,21,0.85)),
     repeating-linear-gradient(90deg, #6b4a2f 0 40px, #5a3d27 40px 80px);
   color: #f4ecd8;
+}
+
+.hero-decor {
+  position: absolute;
+  font-size: 64px;
+  opacity: 0.08;
+  pointer-events: none;
+  animation: float 8s ease-in-out infinite;
+}
+.hero-decor-1 { top: 8%; left: 6%; animation-delay: 0s; }
+.hero-decor-2 { top: 60%; left: 3%; font-size: 48px; animation-delay: 2s; }
+.hero-decor-3 { top: 20%; right: 8%; animation-delay: 4s; }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-16px) rotate(6deg); }
 }
 
 .admin-corner-btn {
   position: absolute;
   top: 20px;
   right: 24px;
-  background: #d9a441;
+  z-index: 5;
+  background: linear-gradient(135deg, #d9a441, #c8933a);
   color: #2c1e12;
   border: none;
-  padding: 10px 18px;
-  border-radius: 4px;
-  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-weight: 600;
   cursor: pointer;
   font-family: inherit;
   font-size: 14px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-.admin-corner-btn:hover { background: #c8933a; }
+.admin-corner-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+}
 
 .hero-header {
   text-align: center;
-  max-width: 640px;
-  margin: 0 auto 20px;
+  max-width: 680px;
+  margin: 0 auto 32px;
+  position: relative;
+  z-index: 2;
+  animation: fadeInDown 0.6s ease both;
 }
 
-.hero-header h1 { font-size: 34px; margin-bottom: 8px; }
-.hero-header p { color: #e8d9b5; font-size: 16px; }
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-emblem {
+  font-size: 46px;
+  margin-bottom: 6px;
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.4));
+}
+
+.hero-header h1 {
+  font-size: 38px;
+  margin: 0 0 10px;
+  letter-spacing: 0.3px;
+  background: linear-gradient(135deg, #f4ecd8, #d9a441);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero-header p {
+  color: #e8d9b5;
+  font-size: 16px;
+  margin: 0 0 22px;
+}
+
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+
+.hero-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(217,164,65,0.35);
+  border-radius: 12px;
+  padding: 10px 22px;
+  min-width: 100px;
+}
+
+.hero-stat strong {
+  font-size: 18px;
+  color: #d9a441;
+  font-family: 'Playfair Display', serif;
+}
+
+.hero-stat span {
+  font-size: 12px;
+  color: #cbb894;
+  margin-top: 2px;
+}
 
 /* ---------- Generic page content ---------- */
 .page-content {
   max-width: 900px;
   margin: 40px auto;
   padding: 0 24px;
+  position: relative;
+  z-index: 2;
 }
 
 .page-content h1 { color: #3b2415; }
-.page-content h2 { color: #5a3d27; margin-top: 24px; }
+.page-content h2 { color: #3b2415; margin-top: 24px; }
 .page-content p { line-height: 1.7; }
 
 /* ---------- Forms ---------- */
 .registration-form, .auth-form {
-  max-width: 560px;
+  max-width: 580px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 4px;
   background: #fffaf0;
-  padding: 28px;
-  border: 1px solid #d9c7a3;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  padding: 32px;
+  border-radius: 14px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.35), 0 0 0 1px rgba(217,164,65,0.25);
+  animation: fadeInUp 0.6s ease 0.1s both;
+  position: relative;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.form-badge {
+  position: absolute;
+  top: -14px;
+  left: 32px;
+  background: linear-gradient(135deg, #8b5e34, #6b4423);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 999px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
 
 .registration-form h2, .auth-form h2 {
-  margin-top: 0;
+  margin-top: 8px;
   color: #3b2415;
 }
 
@@ -88,35 +195,84 @@ body {
   font-size: 13px;
   color: #5a3d27;
   margin-top: 10px;
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .registration-form input,
 .registration-form select,
 .registration-form textarea,
 .auth-form input {
-  padding: 10px;
+  padding: 11px 12px;
   font-size: 14px;
-  border: 1px solid #cbb894;
-  border-radius: 4px;
+  border: 1.5px solid #d9c7a3;
+  border-radius: 8px;
   font-family: inherit;
   background: #fffdf8;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.registration-form input:focus,
+.registration-form select:focus,
+.registration-form textarea:focus,
+.auth-form input:focus {
+  outline: none;
+  border-color: #d9a441;
+  box-shadow: 0 0 0 3px rgba(217,164,65,0.25);
 }
 
 .registration-form button, .auth-form button {
-  margin-top: 18px;
-  padding: 12px;
-  background: #8b5e34;
+  margin-top: 20px;
+  padding: 13px;
+  background: linear-gradient(135deg, #8b5e34, #6b4423);
   color: #fff;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 15px;
-  font-weight: bold;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-.registration-form button:hover, .auth-form button:hover { background: #74492a; }
-.registration-form button:disabled { opacity: 0.6; cursor: not-allowed; }
+.registration-form button:hover, .auth-form button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(139,94,52,0.4);
+}
+
+.registration-form button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+.success-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #eef7ec;
+  border: 1px solid #a9d3a0;
+  color: #2f5c2a;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  animation: slideIn 0.35s ease both;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.success-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background: #4caf50;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 12px;
+  flex-shrink: 0;
+}
 
 .auth-page {
   min-height: 70vh;
@@ -126,25 +282,27 @@ body {
   padding: 20px;
 }
 
-.success-box {
-  background: #eef7ec;
-  border: 1px solid #a9d3a0;
-  border-radius: 8px;
-  padding: 28px;
-  text-align: center;
-}
-
-.success-box button {
-  margin-top: 16px;
-  padding: 10px 20px;
-  background: #8b5e34;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
 /* ---------- Admin dashboard ---------- */
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.navbar-logout {
+  background: #8b5e34;
+  border: none;
+  color: #fff;
+  padding: 9px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.navbar-logout:hover { background: #74492a; }
+
 .admin-filters {
   display: flex;
   gap: 12px;
@@ -152,9 +310,9 @@ body {
 }
 
 .admin-filters input, .admin-filters select {
-  padding: 8px;
-  border: 1px solid #cbb894;
-  border-radius: 4px;
+  padding: 9px;
+  border: 1.5px solid #d9c7a3;
+  border-radius: 6px;
 }
 
 .registration-table {
@@ -162,11 +320,14 @@ body {
   border-collapse: collapse;
   background: #fffaf0;
   font-size: 13px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
 }
 
 .registration-table th, .registration-table td {
-  border: 1px solid #d9c7a3;
-  padding: 8px;
+  border: 1px solid #ecdfc4;
+  padding: 9px;
   text-align: left;
 }
 
@@ -175,40 +336,21 @@ body {
   color: #3b2415;
 }
 
+.registration-table tr:hover td {
+  background: #fff5e0;
+}
+
 .error {
   color: #b03030;
   background: #fbeaea;
   padding: 8px 12px;
-  border-radius: 4px;
+  border-radius: 6px;
   font-size: 14px;
 }
 
-.navbar-logout {
-  background: #8b5e34;
-  border: none;
-  color: #fff;
-  padding: 9px 16px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: inherit;
-  font-size: 14px;
-}
-
-.navbar-logout:hover { background: #74492a; }
-
-.admin-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 16px;
-}
-
-.link-btn {
-  background: none !important;
-  color: #8b5e34 !important;
-  text-decoration: underline;
-  font-weight: normal !important;
-  font-size: 13px !important;
-  padding: 4px !important;
-  margin-top: 8px !important;
+@media (max-width: 480px) {
+  .hero-header h1 { font-size: 28px; }
+  .hero-stats { gap: 12px; }
+  .registration-form, .auth-form { padding: 22px; }
+  .admin-corner-btn { top: 12px; right: 12px; padding: 8px 14px; font-size: 12px; }
 }

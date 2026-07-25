@@ -20,12 +20,21 @@ function AppContent() {
   // Default: public registration form, with a small admin entry point
   return (
     <div className="hero">
+      <div className="hero-decor hero-decor-1">📖</div>
+      <div className="hero-decor hero-decor-2">🔖</div>
+      <div className="hero-decor hero-decor-3">✒️</div>
       <button className="admin-corner-btn" onClick={() => setShowLogin(true)}>
-        Administration Login
+        🔑 Administration Login
       </button>
       <div className="hero-header">
-        <h1>📚 City Public Library</h1>
-        <p>Register below to become a library member.</p>
+        <div className="hero-emblem">📚</div>
+        <h1>City Public Library</h1>
+        <p>Join our community of readers — register below to become a member.</p>
+        <div className="hero-stats">
+          <div className="hero-stat"><strong>12,000+</strong><span>Books</span></div>
+          <div className="hero-stat"><strong>3,400+</strong><span>Members</span></div>
+          <div className="hero-stat"><strong>Free</strong><span>Membership</span></div>
+        </div>
       </div>
       <RegistrationForm />
     </div>
