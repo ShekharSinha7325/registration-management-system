@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 
 export default function AdminDashboard() {
   const [registrations, setRegistrations] = useState([]);
+  const [allForStats, setAllForStats] = useState([]);
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
   const [loading, setLoading] = useState(true);
@@ -14,8 +15,12 @@ export default function AdminDashboard() {
     setLoading(true);
     setError('');
     try {
-      const res = await getRegistrations({ search: search || undefined, status: statusFilter || undefined });
-      setRegistrations(res.data.data);
+      const [filtered, all] = await Promise.all([
+        getRegistrations({ search: search || undefined, status: statusFilter || undefined }),
+        getRegistrations({ limit: 10000 }),
+      ]);
+      setRegistrations(filtered.data.data);
+      setAllForStats(all.data.data);
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to load registrations');
     } finally {
@@ -36,14 +41,38 @@ export default function AdminDashboard() {
     load();
   };
 
+  const total = allForStats.length;
+  const pending = allForStats.filter((r) => r.status === 'pending').length;
+  const approved = allForStats.filter((r) => r.status === 'approved').length;
+  const rejected = allForStats.filter((r) => r.status === 'rejected').length;
+
   return (
     <div className="page-content">
       <div className="admin-header">
         <div>
-          <h1>Administration Dashboard</h1>
-          <p className="form-subtitle">Logged in as {user?.username} — {registrations.length} applications</p>
+          <h1>Admin Dashboard</h1>
+          <p className="form-subtitle">Logged in as {user?.username}</p>
         </div>
         <button className="navbar-logout" onClick={logout}>Logout</button>
+      </div>
+
+      <div className="stats-grid">
+        <div className="stat-card stat-total">
+          <span className="stat-number">{total}</span>
+          <span className="stat-label">Total Applications</span>
+        </div>
+        <div className="stat-card stat-pending">
+          <span className="stat-number">{pending}</span>
+          <span className="stat-label">Pending</span>
+        </div>
+        <div className="stat-card stat-approved">
+          <span className="stat-number">{approved}</span>
+          <span className="stat-label">Approved</span>
+        </div>
+        <div className="stat-card stat-rejected">
+          <span className="stat-number">{rejected}</span>
+          <span className="stat-label">Rejected</span>
+        </div>
       </div>
 
       <div className="admin-filters">

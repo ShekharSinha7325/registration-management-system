@@ -24,7 +24,7 @@ export default function Login({ onCancel }) {
   return (
     <div className="auth-page">
       <form onSubmit={handleSubmit} className="auth-form">
-        <h2>Administration Login</h2>
+        <h2>Admin Login</h2>
         <p className="auth-subtitle">Authorized library staff only</p>
         {error && <p className="error">{error}</p>}
         <input

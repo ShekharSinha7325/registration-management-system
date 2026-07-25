@@ -22,11 +22,50 @@ h1, h2 { font-family: 'Playfair Display', Georgia, serif; }
   overflow: hidden;
   padding: 48px 20px 70px;
   background:
-    radial-gradient(circle at 15% 20%, rgba(217,164,65,0.10), transparent 40%),
-    radial-gradient(circle at 85% 80%, rgba(217,164,65,0.08), transparent 40%),
+    radial-gradient(circle at 15% 20%, rgba(217,164,65,0.14), transparent 40%),
+    radial-gradient(circle at 85% 80%, rgba(217,164,65,0.12), transparent 40%),
     linear-gradient(rgba(44,26,15,0.92), rgba(59,36,21,0.85)),
     repeating-linear-gradient(90deg, #6b4a2f 0 40px, #5a3d27 40px 80px);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 160px 160px;
+  animation: bgDrift 18s ease-in-out infinite;
   color: #f4ecd8;
+}
+
+@keyframes bgDrift {
+  0%   { background-position: 0% 0%, 100% 100%, 0 0, 0 0; }
+  50%  { background-position: 10% 5%, 90% 95%, 0 0, 40px 20px; }
+  100% { background-position: 0% 0%, 100% 100%, 0 0, 0 0; }
+}
+
+.site-logo {
+  position: absolute;
+  top: 18px;
+  left: 24px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  animation: fadeInDown 0.6s ease both;
+}
+
+.site-logo-icon {
+  font-size: 26px;
+  background: rgba(217,164,65,0.15);
+  border: 1px solid rgba(217,164,65,0.4);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.site-logo-text {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 15px;
+  color: #f4ecd8;
+  letter-spacing: 0.3px;
 }
 
 .hero-decor {
@@ -39,6 +78,8 @@ h1, h2 { font-family: 'Playfair Display', Georgia, serif; }
 .hero-decor-1 { top: 8%; left: 6%; animation-delay: 0s; }
 .hero-decor-2 { top: 60%; left: 3%; font-size: 48px; animation-delay: 2s; }
 .hero-decor-3 { top: 20%; right: 8%; animation-delay: 4s; }
+.hero-decor-4 { bottom: 10%; right: 6%; font-size: 56px; animation-delay: 1s; animation-duration: 10s; }
+.hero-decor-5 { bottom: 30%; left: 12%; font-size: 40px; animation-delay: 3s; animation-duration: 12s; }
 
 @keyframes float {
   0%, 100% { transform: translateY(0) rotate(0deg); }
@@ -308,6 +349,46 @@ h1, h2 { font-family: 'Playfair Display', Georgia, serif; }
   gap: 12px;
   margin-bottom: 16px;
 }
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  padding: 18px 20px;
+  border-radius: 12px;
+  background: #fffaf0;
+  border: 1px solid #ecdfc4;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+  animation: fadeInUp 0.5s ease both;
+}
+
+.stat-number {
+  font-family: 'Playfair Display', serif;
+  font-size: 30px;
+  font-weight: 700;
+  color: #3b2415;
+}
+
+.stat-label {
+  font-size: 13px;
+  color: #7a6a52;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+.stat-total .stat-number { color: #3b2415; }
+.stat-pending { border-left: 4px solid #d9a441; }
+.stat-pending .stat-number { color: #b57d1f; }
+.stat-approved { border-left: 4px solid #4caf50; }
+.stat-approved .stat-number { color: #2f7d32; }
+.stat-rejected { border-left: 4px solid #d9534f; }
+.stat-rejected .stat-number { color: #b03030; }
 
 .admin-filters input, .admin-filters select {
   padding: 9px;

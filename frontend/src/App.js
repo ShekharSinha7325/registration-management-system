@@ -23,8 +23,16 @@ function AppContent() {
       <div className="hero-decor hero-decor-1">📖</div>
       <div className="hero-decor hero-decor-2">🔖</div>
       <div className="hero-decor hero-decor-3">✒️</div>
+      <div className="hero-decor hero-decor-4">📕</div>
+      <div className="hero-decor hero-decor-5">🕮</div>
+
+      <div className="site-logo">
+        <span className="site-logo-icon">📚</span>
+        <span className="site-logo-text">City Public Library</span>
+      </div>
+
       <button className="admin-corner-btn" onClick={() => setShowLogin(true)}>
-        🔑 Administration Login
+        🔑 Admin Login
       </button>
       <div className="hero-header">
         <div className="hero-emblem">📚</div>
