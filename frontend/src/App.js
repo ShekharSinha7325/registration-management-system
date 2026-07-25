@@ -1,24 +1,58 @@
-import { useEffect, useState, useCallback } from 'react';
-import { getRegistrations } from './api';
+import { useState } from 'react';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import RegistrationForm from './components/RegistrationForm';
-import RegistrationList from './components/RegistrationList';
+import Login from './components/Login';
+import AdminDashboard from './components/AdminDashboard';
 import './App.css';
 
-export default function App() {
-  const [registrations, setRegistrations] = useState([]);
+function AppContent() {
+  const { user, loading } = useAuth();
+  const [showLogin, setShowLogin] = useState(false);
 
-  const load = useCallback(async () => {
-    const res = await getRegistrations();
-    setRegistrations(res.data.data);
-  }, []);
+  if (loading) return null;
 
-  useEffect(() => { load(); }, [load]);
+  // Logged-in admin: show only the dashboard, never the public form
+  if (user) return <AdminDashboard />;
 
+  // Admin clicked "Administration Login": show the login form
+  if (showLogin) return <Login onCancel={() => setShowLogin(false)} />;
+
+  // Default: public registration form, with a small admin entry point
   return (
-    <div className="app">
-      <h1>Registration Management System</h1>
-      <RegistrationForm onCreated={load} />
-      <RegistrationList registrations={registrations} onChange={load} />
+    <div className="hero">
+      <div className="hero-decor hero-decor-1">📖</div>
+      <div className="hero-decor hero-decor-2">🔖</div>
+      <div className="hero-decor hero-decor-3">✒️</div>
+      <div className="hero-decor hero-decor-4">📕</div>
+      <div className="hero-decor hero-decor-5">🕮</div>
+
+      <div className="site-logo">
+        <span className="site-logo-icon">📚</span>
+        <span className="site-logo-text">City Public Library</span>
+      </div>
+
+      <button className="admin-corner-btn" onClick={() => setShowLogin(true)}>
+        🔑 Admin Login
+      </button>
+      <div className="hero-header">
+        <div className="hero-emblem">📚</div>
+        <h1>City Public Library</h1>
+        <p>Join our community of readers — register below to become a member.</p>
+        <div className="hero-stats">
+          <div className="hero-stat"><strong>12,000+</strong><span>Books</span></div>
+          <div className="hero-stat"><strong>3,400+</strong><span>Members</span></div>
+          <div className="hero-stat"><strong>Free</strong><span>Membership</span></div>
+        </div>
+      </div>
+      <RegistrationForm />
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 }

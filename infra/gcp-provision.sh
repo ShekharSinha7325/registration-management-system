@@ -8,7 +8,7 @@
 set -euo pipefail
 
 ENV=${1:?"Usage: ./gcp-provision.sh <dev|qa|prod>"}
-BILLING_ACCOUNT_ID="XXXXXX-XXXXXX-XXXXXX"   # <-- replace with: gcloud billing accounts list
+BILLING_ACCOUNT_ID="0165C0-F1A5A8-F32578"   # <-- replace with: gcloud billing accounts list
 ORG_ID=""                                   # optional, leave blank if not using an org
 PROJECT_ID="registration-${ENV}-$(date +%s | tail -c 6)"
 REGION="asia-south1"
